@@ -5,4 +5,6 @@ module M2yErcard
   COMPANY_CODE = '01'
 
   TOKEN_PATH = '/token'
+  PROPOSAL_PATH = '/Proposta'
+  CREATE_PROPOSAL_PATH = '/IncluirPre'
 end

@@ -2,6 +2,7 @@ require "m2y_ercard/version"
 require 'm2y_ercard/configuration/configuration'
 require 'm2y_ercard/constants/constants'
 require 'm2y_ercard/modules/base'
+require 'm2y_ercard/modules/proposal'
 
 module M2yErcard
   # Gives access to the current Configuration.
