@@ -6,7 +6,7 @@ module M2yErcard
 
     def self.base_headers
       headers = {}
-      headers['Content-Type'] = "application/json"
+      headers['Content-Type'] = 'application/json'
       headers['Authorization'] = "Bearer #{get_token}"
       headers
     end
@@ -18,13 +18,13 @@ module M2yErcard
         password: M2yErcard.configuration.password,
         strEmpresa: COMPANY_CODE
       }
-      post_encoded(base_url + TOKEN_PATH, body).parsed_response["access_token"]
+      post_encoded(base_url + TOKEN_PATH, body).parsed_response['access_token']
     end
 
     def self.post_encoded(url, body)
       headers = {}
-      headers['Content-Type'] = "application/x-www-form-urlencoded"
-      headers['charset'] = "utf-8"
+      headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      headers['charset'] = 'utf-8'
       puts "Sending POST request to URL: #{url}"
       HTTParty.post(url, headers: headers, body: URI.encode_www_form(body))
     end
@@ -33,10 +33,26 @@ module M2yErcard
       headers = base_headers if headers.nil?
       puts "Sending POST request to URL: #{url}"
       if M2yErcard.configuration.production?
-        HTTParty.post(url, headers: headers, body: body.to_json)
+        format_response(HTTParty.post(url, headers: headers, body: body.to_json))
       else
-        HTTParty.post(url, headers: headers, body: body.to_json, debug_output: $stdout)
+        format_response(HTTParty.post(url, headers: headers, body: body.to_json, debug_output: $stdout))
       end
+    end
+
+    def self.format_response(original_response)
+      response = original_response.parsed_response
+      response = { body: response } if response.is_a?(Array)
+      response = {} unless response.is_a?(Hash) # Could be empty
+      response = response.deep_symbolize_keys!
+      response[:status_code] = original_response.code
+
+      if response[:status_code] == 401
+        response[:message] = response.dig(:error, :Message) || 'Sessão expirada'
+      else
+        response[:message] = response.delete(:strMensagem) if response[:strMensagem].present?
+      end
+      puts response
+      response
     end
   end
 end
