@@ -25,16 +25,17 @@ module M2yErcard
       headers = {}
       headers['Content-Type'] = "application/x-www-form-urlencoded"
       headers['charset'] = "utf-8"
-      post(url, URI.encode_www_form(body), headers)
+      puts "Sending POST request to URL: #{url}"
+      HTTParty.post(url, headers: headers, body: URI.encode_www_form(body))
     end
 
     def self.post(url, body, headers = nil)
       headers = base_headers if headers.nil?
       puts "Sending POST request to URL: #{url}"
       if M2yErcard.configuration.production?
-        HTTParty.post(url, headers: headers, body: body)
+        HTTParty.post(url, headers: headers, body: body.to_json)
       else
-        HTTParty.post(url, headers: headers, body: body, debug_output: $stdout)
+        HTTParty.post(url, headers: headers, body: body.to_json, debug_output: $stdout)
       end
     end
   end
