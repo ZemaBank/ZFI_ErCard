@@ -39,6 +39,16 @@ module M2yErcard
       end
     end
 
+    def self.get(url, headers = nil, query: nil)
+      headers = base_headers if headers.nil?
+      puts "Sending GET request to URL: #{url}"
+      if M2yErcard.configuration.production?
+        format_response(HTTParty.get(url, headers: headers, query: query))
+      else
+        format_response(HTTParty.get(url, headers: headers, query: query, debug_output: $stdout))
+      end
+    end
+
     def self.format_response(original_response)
       response = original_response.parsed_response
       response = { body: response } if response.is_a?(Array)
