@@ -2,6 +2,10 @@ module M2yErcard
   class Proposal < Base
     # POST /Proposta/IncluirPre
     def self.create_proposal(body)
+      body[:strProduto] = product_code
+      body[:strPontoAtendimento] = SHOP_CODE
+      body[:strAtendente] = ATTENDANT_CODE
+      body[:strBandeira] = FLAG_CODE
       post(base_url + PROPOSAL_PATH + CREATE_PROPOSAL_PATH, body)
     end
 

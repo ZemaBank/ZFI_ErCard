@@ -3,7 +3,13 @@
 module M2yErcard
   # FIXED PARAMETERS
   COMPANY_CODE = '01'
+  PRODUCT_CODE_PRD = '0087'
+  PRODUCT_CODE_HMG = '0100'
+  SHOP_CODE = '001'
+  ATTENDANT_CODE = '1'
+  FLAG_CODE = '1'
 
+  # URLS
   TOKEN_PATH = '/token'
   PROPOSAL_PATH = '/Proposta'
   CREATE_PROPOSAL_PATH = '/IncluirPre'

@@ -64,5 +64,10 @@ module M2yErcard
       puts response
       response
     end
+
+    # Environment constants
+    def self.product_code
+      M2yErcard.configuration.production? ? PRODUCT_CODE_PRD : PRODUCT_CODE_HMG
+    end
   end
 end
