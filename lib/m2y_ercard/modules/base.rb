@@ -56,10 +56,18 @@ module M2yErcard
       response = response.deep_symbolize_keys!
       response[:status_code] = original_response.code
 
+      begin
+        response[:original_request] = original_response.request.raw_body
+        response[:url] = original_response.request.uri
+      rescue StandardError
+        response[:original_request] = nil
+        response[:url] = nil
+      end
+
       if response[:status_code] == 401
         response[:message] = response.dig(:error, :Message) || 'Sessão expirada'
       else
-        response[:message] = response.delete(:strMensagem) if response[:strMensagem].present?
+        response[:message] = response[:strMensagem] if response[:strMensagem].present?
       end
       puts response
       response
