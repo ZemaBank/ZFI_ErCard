@@ -25,13 +25,13 @@ module M2yErcard
       headers = {}
       headers['Content-Type'] = 'application/x-www-form-urlencoded'
       headers['charset'] = 'utf-8'
-      puts "Sending POST request to URL: #{url}"
+      # puts "Sending POST request to URL: #{url}"
       HTTParty.post(url, headers: headers, body: URI.encode_www_form(body))
     end
 
     def self.post(url, body, headers = nil)
       headers = base_headers if headers.nil?
-      puts "Sending POST request to URL: #{url}"
+      # puts "Sending POST request to URL: #{url}"
       if M2yErcard.configuration.production?
         format_response(HTTParty.post(url, headers: headers, body: body.to_json))
       else
@@ -41,7 +41,7 @@ module M2yErcard
 
     def self.get(url, headers = nil, query: nil)
       headers = base_headers if headers.nil?
-      puts "Sending GET request to URL: #{url}"
+      # puts "Sending GET request to URL: #{url}"
       if M2yErcard.configuration.production?
         format_response(HTTParty.get(url, headers: headers, query: query))
       else
@@ -69,7 +69,7 @@ module M2yErcard
       else
         response[:message] = response[:strMensagem] if response[:strMensagem].present?
       end
-      puts response
+      # puts response
       response
     end
 
