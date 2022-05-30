@@ -6,6 +6,8 @@ module M2yErcard
       body[:strPontoAtendimento] = SHOP_CODE
       body[:strAtendente] = ATTENDANT_CODE
       body[:strBandeira] = FLAG_CODE
+      body[:strLojista] = STOREKEEPER_CODE
+      body[:strLoja] = STORE_CODE
       post(base_url + PROPOSAL_PATH + CREATE_PROPOSAL_PATH, body)
     end
 

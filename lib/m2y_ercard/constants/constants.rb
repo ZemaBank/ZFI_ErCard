@@ -8,6 +8,8 @@ module M2yErcard
   SHOP_CODE = '001'
   ATTENDANT_CODE = '1'
   FLAG_CODE = '1'
+  STOREKEEPER_CODE = '0'
+  STORE_CODE = '0'
 
   # URLS
   TOKEN_PATH = '/token'
